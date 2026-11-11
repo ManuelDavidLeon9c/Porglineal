@@ -104,8 +104,7 @@ def salida(codigo, cantidad, metodo="PEPS", usuario="Desarrollador", silencioso=
         print(f"  -> Salida registrada con {metodo}. Costo total descargado: ${costo_total:,.2f}")
 
 def mostrar_inventario():
-    print("
-" + "=" * 85)
+    print("" + "=" * 85)
     print(" 1. ESTADO ACTUAL DEL INVENTARIO DIGITAL (EXISTENCIAS Y VALORACIÓN)")
     print("=" * 85)
     print(f"{'Código':<8} | {'Recurso Digital':<20} | {'Categoría':<24} | {'Disponible':<10} | {'Valor Total ($)'}")
@@ -121,8 +120,7 @@ def mostrar_inventario():
     print(f"VALOR TOTAL DEL INVENTARIO EN POOL CORPORATIVO: ${valor_global:,.2f}")
 
 def mostrar_kardex():
-    print("
-" + "=" * 115)
+    print("" + "=" * 115)
     print(" 2. REGISTRO HISTÓRICO DE KARDEX (ENTRADAS Y SALIDAS PEPS / UEPS)")
     print("=" * 115)
     print(f"{'Fecha':<16} | {'Recurso':<16} | {'Movimiento':<14} | {'Cant.':<6} | {'Costo Unit.':<13} | {'Costo Total':<14} | {'Saldo':<6} | {'Usuario'}")
@@ -141,8 +139,7 @@ def mostrar_kardex():
         )
 
 def clasificacion_abc(graficar=True):
-    print("
-" + "=" * 95)
+    print("" + "=" * 95)
     print(" 3. CLASIFICACIÓN ABC DE RECURSOS DIGITALES (CRITERIO DE PARETO)")
     print("=" * 95)
     print(f"{'Recurso Digital':<20} | {'Costo Mensual ($)':<18} | {'Participación (%)':<18} | {'Acumulado (%)':<15} | {'Clase ABC'}")
@@ -196,13 +193,11 @@ def clasificacion_abc(graficar=True):
         plt.title("Diagrama de Pareto - Clasificación ABC de Licencias y APIs")
         plt.tight_layout()
         plt.savefig("inventario_abc_pareto.png", dpi=300)
-        print("
-[INFO] Gráfica ABC guardada como 'inventario_abc_pareto.png'.")
+        print("[INFO] Gráfica ABC guardada como 'inventario_abc_pareto.png'.")
         plt.show()
 
 def alertas_vencimiento(dias=60):
-    print("
-" + "=" * 85)
+    print("" + "=" * 85)
     print(f" 4. ALERTAS PREVENTIVAS DE VENCIMIENTO DE TOKENS/LICENCIAS (Próximos {dias} días)")
     print("=" * 85)
 
@@ -257,14 +252,12 @@ def ejecutar_flujo_dinamico():
 
     # Ingreso de nuevos recursos al inicio
     try:
-        n_nuevos = int(input("
-1. ¿Cuántos recursos digitales NUEVOS desea registrar ahora? [Por defecto: 0]: ").strip() or "0")
+        n_nuevos = int(input("1. ¿Cuántos recursos digitales NUEVOS desea registrar ahora? [Por defecto: 0]: ").strip() or "0")
     except ValueError:
         n_nuevos = 0
 
     for i in range(n_nuevos):
-        print(f"
---- Registro del Recurso Nuevo #{i+1} ---")
+        print(f"--- Registro del Recurso Nuevo #{i+1} ---")
         cod = input("  Código del recurso (ej. R07): ").strip().upper() or f"R0{len(catalogo)+1}"
         nom = input("  Nombre del recurso (ej. AWS Credits): ").strip() or f"Recurso {cod}"
         cat = input("  Categoría (ej. Cloud / IA): ").strip() or "Licencias Software"
@@ -279,14 +272,12 @@ def ejecutar_flujo_dinamico():
 
     # Ingreso de movimientos (Entradas o Salidas PEPS/UEPS) al inicio antes de generar el reporte
     try:
-        n_movs = int(input("
-2. ¿Cuántos movimientos (Entradas / Salidas PEPS o UEPS) desea registrar ahora? [Por defecto: 1]: ").strip() or "1")
+        n_movs = int(input("2. ¿Cuántos movimientos (Entradas / Salidas PEPS o UEPS) desea registrar ahora? [Por defecto: 1]: ").strip() or "1")
     except ValueError:
         n_movs = 0
 
     for j in range(n_movs):
-        print(f"
---- Movimiento #{j+1} ---")
+        print(f"--- Movimiento #{j+1} ---")
         print("  Códigos disponibles:", ", ".join([f"{k} ({v['nombre']})" for k, v in catalogo.items()]))
         tipo_m = input("  Tipo de operación (1 = Entrada, 2 = Salida PEPS, 3 = Salida UEPS) [Por defecto: 2]: ").strip() or "2"
         cod_m = input("  Código del recurso [Por defecto: R01]: ").strip().upper() or "R01"
@@ -303,15 +294,12 @@ def ejecutar_flujo_dinamico():
             salida(cod_m, cant_m, "PEPS", usu_m)
 
     try:
-        dias_alerta = int(input("
-3. Ingrese el umbral de días para alertas de vencimiento [Por defecto: 60]: ").strip() or "60")
+        dias_alerta = int(input("3. Ingrese el umbral de días para alertas de vencimiento [Por defecto: 60]: ").strip() or "60")
     except ValueError:
         dias_alerta = 60
 
     # GENERACIÓN AUTOMÁTICA DE TODA LA INFORMACIÓN AL FINAL
-    print("
-
-" + "#" * 95)
+    print("" + "#" * 95)
     print(" REPORTE CONSOLIDADO GENERADO AUTOMÁTICAMENTE")
     print("#" * 95)
     mostrar_inventario()

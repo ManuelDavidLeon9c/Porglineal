@@ -36,8 +36,7 @@ def pedir_int(mensaje, defecto):
 print("=" * 80)
 print(" CONFIGURACIÓN INICIAL - MODELO DE LÍNEAS DE ESPERA M/M/s (SISTEMA DE IA)")
 print("=" * 80)
-print("Ingrese los parámetros del tráfico de IA (o presione ENTER para usar el valor sugerido):
-")
+print("Ingrese los parámetros del tráfico de IA (o presione ENTER para usar el valor sugerido):")
 
 LAMBDA_CORREOS = pedir_float("1. Tasa de llegada (lambda - solicitudes/correos por minuto)", 100.0)
 MU_SERVIDOR = pedir_float("2. Tasa de servicio por servidor (mu - correos por minuto por nodo)", 25.0)
@@ -45,8 +44,7 @@ LIMITE_SLA_SEG = pedir_float("3. Tiempo máximo de respuesta permitido por SLA (
 
 # Calculamos el mínimo de servidores necesarios para que el sistema sea estable (rho < 1)
 nodos_minimos_estables = int(math.floor(LAMBDA_CORREOS / MU_SERVIDOR)) + 1
-print(f"
-[INFO] Para evitar colapso (utilización >= 100%), el sistema requiere mínimo {nodos_minimos_estables} servidores.")
+print(f"[INFO] Para evitar colapso (utilización >= 100%), el sistema requiere mínimo {nodos_minimos_estables} servidores.")
 
 CANTIDAD_ESCENARIOS = pedir_int("4. ¿Cuántos escenarios consecutivos de servidores desea evaluar?", 6)
 TIEMPO_SIMULACION = pedir_int("5. Tiempo de simulación en SimPy (segundos virtuales)", 20000)
@@ -104,13 +102,11 @@ resultados = []
 rango_nodos = range(nodos_minimos_estables, nodos_minimos_estables + CANTIDAD_ESCENARIOS)
 tiempo_base_seg = (1.0 / MU_SERVIDOR) * 60.0
 
-print("
-" + "=" * 118)
+print("" + "=" * 118)
 print(" INFORME FINAL: TEORÍA DE COLAS (M/M/s) + SIMULACIÓN ESTOCÁSTICA SIMPY")
 print("=" * 118)
 print(f"Tasa llegada (lambda): {LAMBDA_CORREOS} solicitudes/min | Tasa servicio (mu): {MU_SERVIDOR} solicitudes/min ({tiempo_base_seg:.2f}s base)")
-print(f"Meta SLA: Tiempo de respuesta total (Ws) <= {LIMITE_SLA_SEG} segundos
-")
+print(f"Meta SLA: Tiempo de respuesta total (Ws) <= {LIMITE_SLA_SEG} segundos")
 print(f"{'Nodos(s)':<9} | {'Uso Cloud(%)':<13} | {'Po (Vacío)':<11} | {'Cola (Lq)':<10} | {'Espera Wq(s)':<13} | {'Total Teórico Ws':<17} | {'Total SimPy Ws':<15} | {'¿Cumple SLA?'}")
 print("-" * 118)
 
@@ -126,8 +122,7 @@ for s in rango_nodos:
 
 cumplen_sla = [r for r in resultados if r['Ws_seg'] <= LIMITE_SLA_SEG]
 
-print("
-=== CONCLUSIÓN TÉCNICA AUTOMÁTICA ===")
+print("=== CONCLUSIÓN TÉCNICA AUTOMÁTICA ===")
 print(f"-> Con la capacidad mínima estable ({nodos_minimos_estables} nodos), la respuesta total tarda {resultados[0]['Ws_seg']:.2f} segundos.")
 if cumplen_sla:
     optimo = cumplen_sla[0]
@@ -173,6 +168,5 @@ ax2.grid(True, linestyle=':', alpha=0.5)
 
 plt.tight_layout()
 plt.savefig('simulacion_colas_ia_gcp.png', dpi=300)
-print("
-[INFO] Gráfica guardada como 'simulacion_colas_ia_gcp.png'. Mostrando en pantalla...")
+print("[INFO] Gráfica guardada como 'simulacion_colas_ia_gcp.png'. Mostrando en pantalla...")
 plt.show()
